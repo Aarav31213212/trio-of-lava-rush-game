@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>Trio of Lava Rush — 3D Prototype</title>
+<style>
+  * { box-sizing: border-box; }
+  html, body { margin: 0; width: 100%; height: 100%; overflow: hidden; background: #10131c; font-family: system-ui, Arial, sans-serif; color: white; }
+  canvas { display: block; }
+  #hud { position: fixed; inset: 12px 12px auto 12px; display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; pointer-events: none; z-index: 2; }
+  .panel { background: rgba(12,16,27,.78); border: 1px solid rgba(255,255,255,.16); border-radius: 12px; padding: 10px 12px; box-shadow: 0 6px 20px #0005; }
+  #title { font-weight: 900; letter-spacing: .5px; font-size: clamp(14px, 3vw, 20px); }
+  #stats { text-align: right; font-size: 13px; line-height: 1.5; }
+  #message { position: fixed; top: 50%; left: 50%; transform: translate(-50%,-50%); text-align: center; width: min(88vw, 420px); z-index: 4; background: rgba(10,13,23,.92); border: 1px solid #ffffff35; border-radius: 18px; padding: 22px; box-shadow: 0 10px 40px #0008; }
+  #message h1 { margin: 0 0 8px; font-size: 27px; }
+  #message p { margin: 7px 0 16px; color: #d5d9e5; line-height: 1.45; }
+  button { border: 0; border-radius: 12px; background: #ff6a1a; color: white; font-weight: 800; font-size: 16px; padding: 12px 18px; cursor: pointer; touch-action: manipulation; }
+  #controls { position: fixed; inset: auto 0 14px 0; display: flex; justify-content: space-between; align-items: end; padding: 0 14px; z-index: 3; pointer-events: none; }
+  .cluster { display: grid; grid-template-columns: repeat(3, 52px); grid-template-rows: repeat(2, 52px); gap: 6px; pointer-events: auto; }
+  .ctrl { width: 52px; height: 52px; padding: 0; border-radius: 15px; background: #182235d9; border: 1px solid #ffffff42; font-size: 22px; touch-action: none; user-select: none; }
+  #up { grid-column: 2; grid-row: 1; } #left { grid-column: 1; grid-row: 2; } #down { grid-column: 2; grid-row: 2; } #right { grid-column: 3; grid-row: 2; }
+  #jump { width: 76px; height: 76px; border-radius: 50%; background: #ff6a1ae8; pointer-events: auto; touch-action: none; }
+  #hint { position: fixed; bottom: 145px; left: 50%; transform: translateX(-50%); font-size: 12px; color: #fff9; text-align: center; z-index: 2; pointer-events: none; white-space: nowrap; }
+  #restart { display: none; margin-top: 10px; }
+  @media (min-width: 800px) { #controls { opacity: .78; } .ctrl { width: 46px; height: 46px; } .cluster { grid-template-columns: repeat(3,46px); grid-template-rows: repeat(2,46px); } #jump { width: 66px; height: 66px; } }
+</style>
+</head>
+<body>
+<div id="hud">
+  <div class="panel"><div id="title">🌋 TRIO OF LAVA RUSH</div><div style="font-size:12px;color:#c8d0e0">3D survival prototype</div></div>
+  <div class="panel" id="stats">Height: <b id="height">0</b><br>Best: <b id="best">0</b><br>Lava rises: <b>slowly…</b></div>
+</div>
+<div id="hint">Move: WASD / arrow keys • Jump: Space • Mobile: buttons</div>
+<div id="message">
+  <h1>🌋 Lava Rush</h1>
+  <p>Jump across the platforms and keep above the rising lava. Don't fall!</p>
+  <button id="start">START RUN</button>
+  <button id="restart">TRY AGAIN</button>
+</div>
+<div id="controls">
+  <div class="cluster">
+    <button class="ctrl" id="up" aria-label="Forward">▲</button>
+    <button class="ctrl" id="left" aria-label="Left">◀</button>
+    <button class="ctrl" id="down" aria-label="Back">▼</button>
+    <button class="ctrl" id="right" aria-label="Right">▶</button>
+  </div>
+  <button id="jump">JUMP</button>
+</div>
+<script type="module">
+import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js';
+
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(0x10131c);
+scene.fog = new THREE.Fog(0x10131c, 22, 90);
+const camera = new THREE.PerspectiveCamera(65, innerWidth / innerHeight, 0.1, 180);
+const renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: 'high-performance' });
+renderer.setPixelRatio(Math.min(devicePixelRatio, 1.7));
+renderer.setSize(innerWidth, innerHeight);
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+document.body.appendChild(renderer.domElement);
+
+scene.add(new THREE.HemisphereLight(0xaecbff, 0x4d1d0c, 2.0));
+const sun = new THREE.DirectionalLight(0xffe0b0, 3.0);
+sun.position.set(-8, 18, 12); sun.castShadow = true; sun.shadow.mapSize.set(1024,1024);
+scene.add(sun);
+
+const mat = (color, roughness=0.8, emissive=0x000000) => new THREE.MeshStandardMaterial({color, roughness, emissive});
+const platformMat = mat(0x394b63);
+const edgeMat = mat(0x172334);
+const playerMat = mat(0x31d6ff, .35, 0x06384b);
+const lavaMat = new THREE.MeshStandardMaterial({color:0xff4b08, emissive:0xff3100, emissiveIntensity:1.4, roughness:.35});
+const darkFloorMat = mat(0x1b202b);
+
+const floor = new THREE.Mesh(new THREE.BoxGeometry(100, 1, 100), darkFloorMat);
+floor.position.set(0,-1.2,0); floor.receiveShadow=true; scene.add(floor);
+
+const lava = new THREE.Mesh(new THREE.BoxGeometry(100, .65, 100), lavaMat);
+lava.position.set(0,-.65,0); scene.add(lava);
+const lavaLight = new THREE.PointLight(0xff4a08, 2.5, 28); lavaLight.position.set(0,2,0); scene.add(lavaLight);
+
+const platforms = [];
+function addPlatform(x,y,z,w=4,d=4) {
+  const group = new THREE.Group(); group.position.set(x,y,z);
+  const top = new THREE.Mesh(new THREE.BoxGeometry(w,.55,d), platformMat);
+  top.castShadow=true; top.receiveShadow=true; group.add(top);
+  const rim = new THREE.Mesh(new THREE.BoxGeometry(w+.12,.12,d+.12), mat(0x6b819d, .55, 0x07121f));
+  rim.position.y=-.28; group.add(rim);
+  scene.add(group); platforms.push({mesh:group,x,z,y,w,d});
+}
+addPlatform(0,1,0,6,6);
+addPlatform(0,2.4,-7,4,4);
+addPlatform(4,3.8,-12,3.6,3.6);
+addPlatform(0,5.2,-17,3.6,3.6);
+addPlatform(-4,6.6,-22,3.6,3.6);
+addPlatform(0,8,-27,3.6,3.6);
+addPlatform(4,9.4,-32,3.6,3.6);
+addPlatform(0,10.8,-37,4,4);
+addPlatform(-4,12.2,-42,3.6,3.6);
+addPlatform(0,13.6,-47,5,5);
+for(let i=0;i<16;i++){
+  const x = Math.sin(i*1.7)*5.3;
+  const z = -53-i*5;
+  addPlatform(x,15+i*1.35,z,3.5,3.5);
+}
+// Decorative glowing rocks
+for(let i=0;i<34;i++){
+  const rock = new THREE.Mesh(new THREE.DodecahedronGeometry(.45+Math.random()*.8,0), mat(i%3===0?0x57251f:0x272d3b,1,i%3===0?0x280600:0x000000));
+  rock.position.set((Math.random()-.5)*34, Math.random()*10-1, -Math.random()*90);
+  rock.rotation.set(Math.random()*3,Math.random()*3,Math.random()*3); scene.add(rock);
+}
+
+const player = new THREE.Mesh(new THREE.BoxGeometry(.85,1.25,.85), playerMat);
+player.castShadow=true; scene.add(player);
+const playerGlow = new THREE.PointLight(0x20cfff, .9, 5); scene.add(playerGlow);
+
+const state = {running:false,dead:false,vy:0,onGround:false,x:0,y:1.95,z:0,speed:7.5,lavaStart:-.32};
+const keys = {};
+const held = {forward:false,back:false,left:false,right:false,jump:false};
+let best = Number(localStorage.getItem('trioLavaBest') || 0);
+document.getElementById('best').textContent = best;
+const message = document.getElementById('message');
+const startBtn = document.getElementById('start');
+const restartBtn = document.getElementById('restart');
+
+function startGame(){
+  state.running=true; state.dead=false; state.x=0; state.y=1.95; state.z=0; state.vy=0; state.onGround=false;
+  lava.position.y=-.65; message.style.display='none'; startBtn.style.display='inline-block'; restartBtn.style.display='none';
+}
+function endGame(){
+  if(state.dead) return;
+  state.dead=true; state.running=false;
+  message.style.display='block';
+  message.querySelector('h1').textContent='💥 Run Over!';
+  message.querySelector('p').textContent='The lava caught you or you fell. Try again and climb higher!';
+  startBtn.style.display='none'; restartBtn.style.display='inline-block';
+}
+startBtn.addEventListener('click',startGame);
+restartBtn.addEventListener('click',()=>{message.querySelector('h1').textContent='🌋 Lava Rush';message.querySelector('p').textContent='Jump across the platforms and keep above the rising lava. Don’t fall!';startGame();});
+
+addEventListener('keydown',e=>{keys[e.code]=true;if(['Space','ArrowUp','ArrowDown','ArrowLeft','ArrowRight'].includes(e.code))e.preventDefault();});
+addEventListener('keyup',e=>keys[e.code]=false);
+function bindButton(id,prop){
+ const el=document.getElementById(id);
+ const on= e=>{e.preventDefault();held[prop]=true;};
+ const off=e=>{e.preventDefault();held[prop]=false;};
+ el.addEventListener('pointerdown',on); el.addEventListener('pointerup',off); el.addEventListener('pointercancel',off); el.addEventListener('pointerleave',off);
+}
+bindButton('up','forward'); bindButton('down','back'); bindButton('left','left'); bindButton('right','right');
+const jumpBtn=document.getElementById('jump');
+jumpBtn.addEventListener('pointerdown',e=>{e.preventDefault();held.jump=true;});
+jumpBtn.addEventListener('pointerup',e=>{e.preventDefault();held.jump=false;});
+jumpBtn.addEventListener('pointercancel',()=>held.jump=false);
+
+const clock = new THREE.Clock();
+let elapsed=0;
+function update(dt){
+  if(!state.running) return;
+  elapsed += dt;
+  const forward = keys.KeyW||keys.ArrowUp||held.forward;
+  const back = keys.KeyS||keys.ArrowDown||held.back;
+  const left = keys.KeyA||keys.ArrowLeft||held.left;
+  const right = keys.KeyD||keys.ArrowRight||held.right;
+  const jumping = keys.Space||keys.KeyW&&false||held.jump;
+  const dx=(right?1:0)-(left?1:0);
+  const dz=(back?1:0)-(forward?1:0);
+  const len=Math.hypot(dx,dz)||1;
+  state.x += dx/len*state.speed*dt;
+  state.z += dz/len*state.speed*dt;
+  state.x = THREE.MathUtils.clamp(state.x,-13,13);
+
+  // Gravity and jump.
+  if(jumping && state.onGround){state.vy=10.2;state.onGround=false;}
+  state.vy -= 22*dt;
+  state.y += state.vy*dt;
+  state.onGround=false;
+
+  // Platform top collision when descending.
+  for(const p of platforms){
+    const within = Math.abs(state.x-p.x) < p.w/2+.35 && Math.abs(state.z-p.z) < p.d/2+.35;
+    const feet = state.y-.625;
+    if(within && state.vy<=0 && feet<=p.y+.28 && feet>=p.y-.55){
+      state.y=p.y+.625; state.vy=0; state.onGround=true;
+    }
+  }
+  // Lava rises over time; the challenge gets harder as you climb.
+  lava.position.y = -.65 + Math.min(elapsed*.115, 20);
+  lavaLight.position.y = lava.position.y+2;
+  if(state.y-.62 < lava.position.y+.48 || state.y < -8) endGame();
+
+  player.position.set(state.x,state.y,state.z);
+  player.rotation.z = THREE.MathUtils.lerp(player.rotation.z,-dx*.12,.12);
+  playerGlow.position.set(state.x,state.y+1,state.z);
+  const height=Math.max(0,Math.floor(state.y-1.95));
+  document.getElementById('height').textContent=height;
+  if(height>best){best=height;document.getElementById('best').textContent=best;localStorage.setItem('trioLavaBest',best);}
+
+  // Camera follows from behind and above.
+  const target = new THREE.Vector3(state.x*.45, state.y+2.4, state.z+7.5);
+  camera.position.lerp(target,.075);
+  camera.lookAt(state.x,state.y+0.35,state.z-3.2);
+}
+function animate(){
+  requestAnimationFrame(animate);
+  const dt=Math.min(clock.getDelta(),.035);
+  update(dt);
+  // Gentle lava shimmer.
+  lava.material.emissiveIntensity=1.15+Math.sin(performance.now()*.004)*.22;
+  renderer.render(scene,camera);
+}
+camera.position.set(0,7,12); camera.lookAt(0,1,0);
+animate();
+addEventListener('resize',()=>{camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();renderer.setSize(innerWidth,innerHeight);});
+</script>
+</body>
+</html>
