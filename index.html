@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#101426">
+<title>Trio of Lava Rush | Official Game Hub</title>
+<style>
+:root{color-scheme:dark;--bg:#0c1020;--panel:#151c32;--line:#2a3552;--text:#f5f7ff;--muted:#aab5d0;--orange:#ff8a35;--gold:#ffd166}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+a{color:inherit;text-decoration:none}.wrap{width:min(1080px,calc(100% - 36px));margin:auto}
+header{height:72px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #ffffff12}
+.logo{display:flex;align-items:center;gap:10px;font-weight:950;letter-spacing:.04em}.logo-mark{width:38px;height:38px;border-radius:12px;display:grid;place-items:center;background:linear-gradient(140deg,#ffc04a,#f4512b);font-size:22px}
+nav{display:flex;gap:22px;color:var(--muted);font-size:14px}nav a:hover{color:white}
+.hero{padding:72px 0 54px;display:grid;grid-template-columns:1.05fr .95fr;gap:35px;align-items:center}
+.kicker{font-size:11px;font-weight:900;letter-spacing:.22em;color:var(--gold)}h1{font-size:clamp(42px,7vw,76px);line-height:.98;letter-spacing:-.055em;margin:16px 0 20px}h1 span{color:var(--orange)}.intro{max-width:500px;color:var(--muted);line-height:1.7;font-size:16px}
+.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:26px}.btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:0 21px;border-radius:13px;font-weight:850;border:1px solid var(--line);background:#1a2340;cursor:pointer}.btn.primary{background:linear-gradient(110deg,#ffc44d,#ff742d);color:#241207;border:0}.btn:hover{filter:brightness(1.08);transform:translateY(-1px)}
+.art{min-height:310px;border:1px solid #ffffff1b;border-radius:28px;overflow:hidden;position:relative;background:radial-gradient(ellipse at 50% 110%,#ff5a1e 0,#9e321f 18%,transparent 43%),linear-gradient(155deg,#26365e,#12182d 65%);display:grid;place-items:center}
+.moon{position:absolute;right:15%;top:13%;width:74px;height:74px;border-radius:50%;background:#ffdca0;box-shadow:0 0 60px #ffc25d66}
+.platform{position:absolute;height:30px;transform:skewY(-18deg) rotate(-4deg);border:1px solid #a8ffe3;box-shadow:0 9px 0 #1d625e,0 14px 35px #0007;background:linear-gradient(90deg,#42a99b,#8df2c7)}
+.p1{width:55%;left:21%;top:51%}.p2{width:30%;left:48%;top:35%;transform:skewY(-18deg) rotate(8deg)}.p3{width:24%;left:15%;top:25%;transform:skewY(-18deg) rotate(-10deg)}
+.runner{position:absolute;left:47%;top:35%;font-size:55px;filter:drop-shadow(0 12px 10px #0009);transform:rotate(-9deg)}
+.art-label{position:absolute;bottom:20px;left:20px;font-size:11px;font-weight:900;letter-spacing:.16em;color:#ffe1b0}
+section{padding:34px 0 55px}.section-head{display:flex;justify-content:space-between;align-items:end;gap:15px;margin-bottom:20px}h2{font-size:28px;margin:0;letter-spacing:-.03em}.sub{color:var(--muted);font-size:14px;margin:7px 0 0}
+.gamebox{border:1px solid var(--line);border-radius:22px;background:#11182a;padding:12px}.game-top{display:flex;justify-content:space-between;gap:10px;align-items:center;padding:8px 8px 14px}.live{color:#7df2b3;font-size:11px;font-weight:900;letter-spacing:.1em}.frame{width:100%;height:min(72vh,650px);min-height:420px;border:0;border-radius:14px;background:#10162b;display:block}.hint{font-size:12px;color:var(--muted);padding:12px 8px 2px;line-height:1.6}
+.features{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.feature{border:1px solid var(--line);background:var(--panel);border-radius:18px;padding:20px}.feature .ico{font-size:25px}.feature h3{font-size:16px;margin:13px 0 7px}.feature p{font-size:13px;color:var(--muted);line-height:1.6;margin:0}
+footer{border-top:1px solid #ffffff14;padding:25px 0;color:#8792ad;font-size:12px;line-height:1.7}.footer-inner{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+@media(max-width:720px){.wrap{width:min(100% - 24px,560px)}header{height:62px}nav{gap:13px;font-size:12px}.hero{padding:48px 0 30px;grid-template-columns:1fr;gap:24px}.art{min-height:245px}h1{font-size:52px}.intro{font-size:15px}.section-head{align-items:start;flex-direction:column}.features{grid-template-columns:1fr}.frame{min-height:500px;height:70vh}.logo{font-size:13px}}
+</style>
+</head>
+<body>
+<header class="wrap">
+ <a class="logo" href="#home"><span class="logo-mark">🌋</span><span>TRIO OF LAVA RUSH</span></a>
+ <nav><a href="#game">Play</a><a href="#features">Features</a><a href="#about">About</a></nav>
+</header>
+<main id="home">
+ <div class="wrap hero">
+  <div>
+   <div class="kicker">A NEW RUN STARTS HERE</div>
+   <h1>RUN FAST.<br><span>JUMP HIGH.</span><br>ESCAPE LAVA.</h1>
+   <p class="intro">Welcome to Trio of Lava Rush! Leap across floating platforms, collect shiny coins, and keep moving before the lava catches up. This is our first playable browser prototype.</p>
+   <div class="actions"><a class="btn primary" href="#game">▶ Play the game</a><a class="btn" href="#features">Explore features ↓</a></div>
+  </div>
+  <div class="art" aria-label="Illustration of a lava obstacle course">
+   <div class="moon"></div><div class="platform p1"></div><div class="platform p2"></div><div class="platform p3"></div><div class="runner">🏃</div><div class="art-label">DANGER LEVEL: RISING</div>
+  </div>
+ </div>
+ <section id="game">
+  <div class="wrap">
+   <div class="section-head"><div><h2>Jump into the action</h2><p class="sub">Your game is embedded right here—no separate game page needed.</p></div><span class="live">● PLAYABLE PROTOTYPE</span></div>
+   <div class="gamebox">
+    <div class="game-top"><strong>🌋 Trio of Lava Rush · v0.1</strong><span style="font-size:12px;color:#aab5d0">Touch + keyboard</span></div>
+    <iframe class="frame" title="Trio of Lava Rush playable game" srcdoc="&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;UTF-8&quot;&gt;
+&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no&quot;&gt;
+&lt;title&gt;Trio of Lava Rush — 3D Prototype&lt;/title&gt;
+&lt;style&gt;
+:root{color-scheme:dark;--ink:#f5f7ff;--muted:#aeb8d0;--panel:rgba(12,18,35,.78);--line:rgba(255,255,255,.14)}
+*{box-sizing:border-box}
+html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#10162b;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:var(--ink);touch-action:none}
+#game{position:fixed;inset:0;width:100%;height:100%;display:block}
+#hud{position:fixed;inset:0;pointer-events:none;padding:14px;display:flex;flex-direction:column;justify-content:space-between}
+.top{display:flex;align-items:flex-start;justify-content:space-between;gap:8px}
+.brand,.stat,.help{background:var(--panel);border:1px solid var(--line);backdrop-filter:blur(8px);border-radius:14px;padding:10px 13px;box-shadow:0 8px 30px #0003}
+.brand strong{display:block;letter-spacing:.08em;font-size:clamp(13px,2.5vw,18px)}
+.brand small{color:#ffbd66;font-size:11px;letter-spacing:.16em;font-weight:800}
+.stats{display:flex;gap:7px;flex-wrap:wrap;justify-content:flex-end}
+.stat{padding:9px 11px;font-size:12px;color:var(--muted)}.stat b{color:white;font-size:16px;margin-left:4px}
+.bottom{display:flex;justify-content:space-between;align-items:flex-end;gap:12px}
+.help{max-width:340px;font-size:12px;line-height:1.5;color:#d5def2}
+.controls{pointer-events:auto;display:flex;gap:8px;align-items:flex-end}
+.pad{display:grid;grid-template-columns:repeat(3,48px);grid-template-rows:repeat(2,45px);gap:5px}
+.ctrl{border:1px solid #ffffff38;background:#18243edb;color:white;border-radius:13px;font-size:19px;font-weight:800;box-shadow:0 4px 0 #050a17;touch-action:none;user-select:none}
+.ctrl:active,.ctrl.down{background:#ff7b28;color:#16121b;transform:translateY(2px);box-shadow:0 2px 0 #050a17}
+.pad .up{grid-column:2;grid-row:1}.pad .left{grid-column:1;grid-row:2}.pad .down{grid-column:2;grid-row:2}.pad .right{grid-column:3;grid-row:2}
+.jump{height:95px;width:78px;border-radius:22px;background:linear-gradient(160deg,#ffb642,#f45a2a);color:#20110b;font-size:14px;letter-spacing:.05em}
+.overlay{position:fixed;inset:0;display:grid;place-items:center;background:linear-gradient(#08102088,#080b18aa);padding:18px}
+.card{width:min(440px,100%);background:linear-gradient(145deg,#182442f5,#10162bf5);border:1px solid #ffffff25;border-radius:24px;padding:25px;box-shadow:0 24px 90px #0008;text-align:center}
+.eyebrow{color:#ffb34e;font-size:11px;letter-spacing:.2em;font-weight:900}
+h1{font-size:clamp(30px,7vw,46px);line-height:1.02;margin:12px 0}
+.card p{color:#c2cde4;line-height:1.6;font-size:14px}
+.primary{border:0;border-radius:14px;background:linear-gradient(120deg,#ffb842,#ff642d);padding:14px 22px;color:#23130b;font-size:16px;font-weight:900;width:100%;margin-top:10px}
+.note{font-size:11px!important;color:#8f9db9!important}
+.hidden{display:none!important}
+@media(max-width:600px){#hud{padding:10px}.brand{padding:8px 10px}.stat{padding:7px 8px;font-size:10px}.stat b{font-size:14px}.help{display:none}.pad{grid-template-columns:repeat(3,43px);grid-template-rows:repeat(2,40px)}.jump{width:69px;height:85px}.controls{gap:6px}}
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;canvas id=&quot;game&quot; aria-label=&quot;3D Lava Rush game&quot;&gt;&lt;/canvas&gt;
+&lt;div id=&quot;hud&quot;&gt;
+ &lt;div class=&quot;top&quot;&gt;
+  &lt;div class=&quot;brand&quot;&gt;&lt;small&gt;TRIO OF&lt;/small&gt;&lt;strong&gt;🌋 LAVA RUSH&lt;/strong&gt;&lt;/div&gt;
+  &lt;div class=&quot;stats&quot;&gt;
+   &lt;div class=&quot;stat&quot;&gt;COINS &lt;b id=&quot;coins&quot;&gt;0&lt;/b&gt;&lt;/div&gt;
+   &lt;div class=&quot;stat&quot;&gt;DISTANCE &lt;b id=&quot;distance&quot;&gt;0m&lt;/b&gt;&lt;/div&gt;
+   &lt;div class=&quot;stat&quot;&gt;BEST &lt;b id=&quot;best&quot;&gt;0m&lt;/b&gt;&lt;/div&gt;
+  &lt;/div&gt;
+ &lt;/div&gt;
+ &lt;div class=&quot;bottom&quot;&gt;
+  &lt;div class=&quot;help&quot;&gt;MOVE: WASD / ARROWS · JUMP: SPACE&lt;br&gt;On mobile, use the direction pad and JUMP. Land on platforms and grab glowing coins!&lt;/div&gt;
+  &lt;div class=&quot;controls&quot;&gt;
+   &lt;div class=&quot;pad&quot;&gt;
+    &lt;button class=&quot;ctrl up&quot; data-key=&quot;up&quot; aria-label=&quot;Move forward&quot;&gt;▲&lt;/button&gt;
+    &lt;button class=&quot;ctrl left&quot; data-key=&quot;left&quot; aria-label=&quot;Move left&quot;&gt;◀&lt;/button&gt;
+    &lt;button class=&quot;ctrl down&quot; data-key=&quot;back&quot; aria-label=&quot;Move backward&quot;&gt;▼&lt;/button&gt;
+    &lt;button class=&quot;ctrl right&quot; data-key=&quot;right&quot; aria-label=&quot;Move right&quot;&gt;▶&lt;/button&gt;
+   &lt;/div&gt;
+   &lt;button class=&quot;ctrl jump&quot; data-key=&quot;jump&quot;&gt;JUMP&lt;br&gt;⬆&lt;/button&gt;
+  &lt;/div&gt;
+ &lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&quot;overlay&quot; class=&quot;overlay&quot;&gt;
+ &lt;div class=&quot;card&quot;&gt;
+  &lt;div class=&quot;eyebrow&quot;&gt;A MINI 3D BROWSER GAME&lt;/div&gt;
+  &lt;h1&gt;TRIO OF&lt;br&gt;&lt;span style=&quot;color:#ff8b36&quot;&gt;LAVA RUSH&lt;/span&gt;&lt;/h1&gt;
+  &lt;p&gt;Jump across floating platforms, collect coins, and keep moving before the lava catches you. How far can you get?&lt;/p&gt;
+  &lt;button id=&quot;start&quot; class=&quot;primary&quot;&gt;START RUN ▶&lt;/button&gt;
+  &lt;p class=&quot;note&quot;&gt;Prototype v0.1 · Made for touch screens and keyboard&lt;/p&gt;
+ &lt;/div&gt;
+&lt;/div&gt;
+&lt;script&gt;
+(()=&gt;{
+const canvas=document.getElementById(&#x27;game&#x27;),ctx=canvas.getContext(&#x27;2d&#x27;);
+const $=id=&gt;document.getElementById(id);
+let W=innerWidth,H=innerHeight,DPR=1;
+function resize(){W=innerWidth;H=innerHeight;DPR=Math.min(devicePixelRatio||1,1.7);canvas.width=Math.floor(W*DPR);canvas.height=Math.floor(H*DPR);canvas.style.width=W+&#x27;px&#x27;;canvas.style.height=H+&#x27;px&#x27;;ctx.setTransform(DPR,0,0,DPR,0,0)}
+addEventListener(&#x27;resize&#x27;,resize);resize();
+const keys={};let running=false,ended=false,last=0,elapsed=0,coins=0,best=Number(localStorage.getItem(&#x27;trioLavaBest&#x27;)||0);
+$(&#x27;best&#x27;).textContent=best+&#x27;m&#x27;;
+const player={x:0,y:0,z:2,vy:0,grounded:true,air:0};
+let lavaY=-3.7,platforms=[],coinItems=[],particles=[],shake=0;
+const clamp=(v,a,b)=&gt;Math.max(a,Math.min(b,v));
+function makeWorld(){
+ platforms=[];coinItems=[];
+ platforms.push({x:0,y:0,z:1,w:7,d:9});
+ let z=7,x=0,y=0;
+ for(let i=0;i&lt;90;i++){
+  z+=5.4+(i%4)*.28;
+  x=clamp(x+([ -1,1,0,1,-1,0][i%6])*1.8,-5.2,5.2);
+  if(i%5===3)y+=.45;else if(i%5===0)y=Math.max(0,y-.25);
+  const p={x,y,z,w:i%4===0?3.6:3.0,d:i%6===2?3.6:3.1};
+  platforms.push(p);
+  if(i%2===0)coinItems.push({x:x+(i%3===0?.4:0),y:y+.95,z:z,got:false,phase:Math.random()*6});
+ }
+}
+function reset(){
+ makeWorld();player.x=0;player.y=0;player.z=2;player.vy=0;player.grounded=true;player.air=0;
+ lavaY=-3.7;coins=0;elapsed=0;shake=0;running=true;ended=false;$(&#x27;overlay&#x27;).classList.add(&#x27;hidden&#x27;);updateHUD();
+}
+function updateHUD(){ $(&#x27;coins&#x27;).textContent=coins;$(&#x27;distance&#x27;).textContent=Math.max(0,Math.floor(player.z))+&#x27;m&#x27;; }
+$(&#x27;start&#x27;).addEventListener(&#x27;click&#x27;,reset);
+function keyName(e){let k=e.key.toLowerCase();if([&#x27;arrowup&#x27;,&#x27;w&#x27;].includes(k))return&#x27;up&#x27;;if([&#x27;arrowdown&#x27;,&#x27;s&#x27;].includes(k))return&#x27;back&#x27;;if([&#x27;arrowleft&#x27;,&#x27;a&#x27;].includes(k))return&#x27;left&#x27;;if([&#x27;arrowright&#x27;,&#x27;d&#x27;].includes(k))return&#x27;right&#x27;;if(k===&#x27; &#x27;||k===&#x27;arrowup&#x27;&amp;&amp;e.shiftKey)return&#x27;jump&#x27;;return k}
+addEventListener(&#x27;keydown&#x27;,e=&gt;{if([&#x27;ArrowUp&#x27;,&#x27;ArrowDown&#x27;,&#x27;ArrowLeft&#x27;,&#x27;ArrowRight&#x27;,&#x27; &#x27;].includes(e.key))e.preventDefault();let k=keyName(e);keys[k]=true;if(k===&#x27;jump&#x27;&amp;&amp;running)jump()});
+addEventListener(&#x27;keyup&#x27;,e=&gt;{keys[keyName(e)]=false});
+document.querySelectorAll(&#x27;[data-key]&#x27;).forEach(b=&gt;{
+ const k=b.dataset.key;
+ const down=e=&gt;{e.preventDefault();keys[k]=true;b.classList.add(&#x27;down&#x27;);if(k===&#x27;jump&#x27;&amp;&amp;running)jump()};
+ const up=e=&gt;{e.preventDefault();keys[k]=false;b.classList.remove(&#x27;down&#x27;)};
+ b.addEventListener(&#x27;pointerdown&#x27;,down);b.addEventListener(&#x27;pointerup&#x27;,up);b.addEventListener(&#x27;pointercancel&#x27;,up);b.addEventListener(&#x27;pointerleave&#x27;,e=&gt;{if(e.buttons===0)up(e)});
+});
+function jump(){if(player.grounded){player.vy=7.7;player.grounded=false;player.air=0}}
+function hitPlatform(x,z,y){for(const p of platforms){if(x&gt;p.x-p.w/2-.12&amp;&amp;x&lt;p.x+p.w/2+.12&amp;&amp;z&gt;p.z-p.d/2-.12&amp;&amp;z&lt;p.z+p.d/2+.12&amp;&amp;Math.abs(y-p.y)&lt;.5)return p}return null}
+function update(dt){
+ if(!running)return;
+ elapsed+=dt;
+ const move=4.9*dt;
+ if(keys.left)player.x-=move;if(keys.right)player.x+=move;
+ if(keys.up)player.z+=move*1.22;if(keys.back)player.z-=move*.8;
+ player.x=clamp(player.x,-8,8);player.z=Math.max(-1,player.z);
+ const oldY=player.y;player.vy-=13.8*dt;player.y+=player.vy*dt;
+ player.grounded=false;
+ if(player.vy&lt;=0){
+  const p=hitPlatform(player.x,player.z,oldY);
+  if(p&amp;&amp;player.y&lt;=p.y+.2&amp;&amp;oldY&gt;=p.y-.18){player.y=p.y;player.vy=0;player.grounded=true}
+ }
+ lavaY+=dt*(.15+Math.min(.24,player.z/1000));
+ if(player.y&lt;lavaY+.38||player.y &lt; -12){finish();return}
+ for(const c of coinItems){if(!c.got&amp;&amp;Math.hypot(player.x-c.x,player.z-c.z)&lt;.8&amp;&amp;Math.abs(player.y-c.y)&lt;1.5){c.got=true;coins++;for(let i=0;i&lt;7;i++)particles.push({x:c.x,y:c.y,z:c.z,vx:(Math.random()-.5)*2,vy:Math.random()*2,vz:(Math.random()-.5)*2,life:.55})}}
+ for(const p of particles){p.x+=p.vx*dt;p.y+=p.vy*dt;p.z+=p.vz*dt;p.life-=dt}particles=particles.filter(p=&gt;p.life&gt;0);
+ if(player.z&gt;platforms[platforms.length-10].z-20){
+  let z=platforms[platforms.length-1].z,x=platforms[platforms.length-1].x,y=platforms[platforms.length-1].y;
+  for(let i=0;i&lt;20;i++){z+=5.8;x=clamp(x+([1,-1,0,1,-1][Math.floor(Math.random()*5)])*1.6,-5.4,5.4);if(Math.random()&lt;.3)y+=.35;else y=Math.max(0,y-.2);platforms.push({x,y,z,w:3,d:3.2});coinItems.push({x,y:y+.95,z,got:false,phase:Math.random()*6})}
+ }
+ updateHUD();
+}
+function finish(){
+ running=false;ended=true;
+ const dist=Math.max(0,Math.floor(player.z));if(dist&gt;best){best=dist;localStorage.setItem(&#x27;trioLavaBest&#x27;,best);$(&#x27;best&#x27;).textContent=best+&#x27;m&#x27;}
+ $(&#x27;overlay&#x27;).classList.remove(&#x27;hidden&#x27;);
+ $(&#x27;overlay&#x27;).querySelector(&#x27;.eyebrow&#x27;).textContent=&#x27;RUN OVER · &#x27;+dist+&#x27; METRES&#x27;;
+ $(&#x27;overlay&#x27;).querySelector(&#x27;h1&#x27;).innerHTML=&#x27;THE LAVA&lt;br&gt;&lt;span style=&quot;color:#ff8b36&quot;&gt;GOT YOU!&lt;/span&gt;&#x27;;
+ $(&#x27;overlay&#x27;).querySelector(&#x27;.card p&#x27;).textContent=&#x27;You collected &#x27;+coins+&#x27; coin&#x27;+(coins===1?&#x27;&#x27;:&#x27;s&#x27;)+&#x27;. Try a different route and beat your best distance!&#x27;;
+ $(&#x27;start&#x27;).textContent=&#x27;RUN AGAIN ↻&#x27;;
+}
+function project(x,y,z){
+ const camX=player.x*.68,camY=player.y+5.6,camZ=player.z-8.5;
+ const dx=x-camX, dz=z-camZ;
+ const cp=Math.cos(.39),sp=Math.sin(.39);
+ const depth=dz*cp+(camY-y)*sp;
+ const vert=(camY-y)*cp-dz*sp;
+ const focal=Math.min(W,H)*1.08;
+ if(depth&lt;.3)return null;
+ return {x:W/2+dx*focal/depth,y:H*.53+vert*focal/depth,depth,scale:focal/depth};
+}
+function poly(points,fill,stroke=null){
+ const ps=points.map(p=&gt;project(p[0],p[1],p[2]));if(ps.some(p=&gt;!p))return;
+ ctx.beginPath();ctx.moveTo(ps[0].x,ps[0].y);for(let i=1;i&lt;ps.length;i++)ctx.lineTo(ps[i].x,ps[i].y);ctx.closePath();ctx.fillStyle=fill;ctx.fill();if(stroke){ctx.strokeStyle=stroke;ctx.lineWidth=1;ctx.stroke()}
+}
+function cube(x,y,z,w,h,d,top,side1,side2){
+ const x0=x-w/2,x1=x+w/2,z0=z-d/2,z1=z+d/2;
+ poly([[x0,y,z0],[x1,y,z0],[x1,y,z1],[x0,y,z1]],top);
+ poly([[x0,y,z0],[x1,y,z0],[x1,y-h,z0],[x0,y-h,z0]],side1);
+ poly([[x1,y,z0],[x1,y,z1],[x1,y-h,z1],[x1,y-h,z0]],side2);
+ poly([[x0,y,z1],[x1,y,z1],[x1,y-h,z1],[x0,y-h,z1]],&#x27;#202d48&#x27;);
+}
+function drawSky(){
+ const g=ctx.createLinearGradient(0,0,0,H);g.addColorStop(0,&#x27;#111b3a&#x27;);g.addColorStop(.48,&#x27;#4b5e85&#x27;);g.addColorStop(1,&#x27;#ff9856&#x27;);ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+ const sun=ctx.createRadialGradient(W*.76,H*.24,2,W*.76,H*.24,H*.19);sun.addColorStop(0,&#x27;#fff4b8aa&#x27;);sun.addColorStop(1,&#x27;#ffd47b00&#x27;);ctx.fillStyle=sun;ctx.fillRect(0,0,W,H);
+ for(let i=0;i&lt;7;i++){const x=((i*173+35)%W),y=H*.27+(i%3)*18;ctx.fillStyle=&#x27;#ffffff13&#x27;;ctx.beginPath();ctx.ellipse(x,y,35+(i%3)*15,9,0,0,Math.PI*2);ctx.fill()}
+}
+function drawLava(){
+ const z0=player.z+1,z1=player.z+85;
+ poly([[-90,lavaY,z0],[90,lavaY,z0],[90,lavaY,z1],[-90,lavaY,z1]],&#x27;#ff4d1c&#x27;);
+ for(let i=0;i&lt;24;i++){let x=Math.sin(i*23.3+elapsed*1.4)*16,z=player.z+5+(i*3.8)%75;let p=project(x,lavaY+.025,z);if(p){ctx.globalAlpha=.35;ctx.fillStyle=i%2?&#x27;#ffd34f&#x27;:&#x27;#ff8a23&#x27;;ctx.beginPath();ctx.ellipse(p.x,p.y,Math.max(1,p.scale*1.1),Math.max(1,p.scale*.32),Math.sin(elapsed+i),0,Math.PI*2);ctx.fill();ctx.globalAlpha=1}}
+}
+function drawCoin(c){
+ const bob=Math.sin(elapsed*4+c.phase)*.12,p=project(c.x,c.y+bob,c.z);if(!p)return;
+ const r=clamp(p.scale*.24,2,18);
+ ctx.save();ctx.translate(p.x,p.y);ctx.rotate(elapsed*1.7+c.phase);ctx.fillStyle=&#x27;#ffcf45&#x27;;ctx.strokeStyle=&#x27;#fff2a4&#x27;;ctx.lineWidth=Math.max(1,r*.12);ctx.beginPath();ctx.ellipse(0,0,r*.72,r,0,0,Math.PI*2);ctx.fill();ctx.stroke();ctx.fillStyle=&#x27;#b96b19&#x27;;ctx.font=`bold ${Math.max(5,r)}px sans-serif`;ctx.textAlign=&#x27;center&#x27;;ctx.textBaseline=&#x27;middle&#x27;;ctx.fillText(&#x27;$&#x27;,0,1);ctx.restore();
+}
+function drawPlayer(){
+ const x=player.x,y=player.y,z=player.z;
+ cube(x,y+1.05,z,.65,1.05,.52,&#x27;#54e7ff&#x27;,&#x27;#1685a8&#x27;,&#x27;#24b4d1&#x27;);
+ const head=project(x,y+1.68,z);if(head){ctx.fillStyle=&#x27;#ffd2a3&#x27;;ctx.beginPath();ctx.arc(head.x,head.y,clamp(head.scale*.17,3,12),0,Math.PI*2);ctx.fill();ctx.fillStyle=&#x27;#25324e&#x27;;ctx.beginPath();ctx.arc(head.x,head.y-2,clamp(head.scale*.17,3,12),Math.PI,Math.PI*2);ctx.fill()}
+ const shadow=project(x,y+.02,z);if(shadow){ctx.fillStyle=&#x27;#09101e55&#x27;;ctx.beginPath();ctx.ellipse(shadow.x,shadow.y,Math.max(3,shadow.scale*.42),Math.max(2,shadow.scale*.15),0,0,Math.PI*2);ctx.fill()}
+}
+function render(){
+ drawSky();
+ // Distant floating rock silhouettes
+ for(let i=0;i&lt;10;i++){let z=player.z+12+i*7,x=Math.sin(i*4.3)*12;cube(x,-1.8,z,2.5,2.5,2,&#x27;#465574&#x27;,&#x27;#26334d&#x27;,&#x27;#34435f&#x27;)}
+ drawLava();
+ const visible=platforms.filter(p=&gt;p.z&gt;player.z-5&amp;&amp;p.z&lt;player.z+72).sort((a,b)=&gt;b.z-a.z);
+ for(const p of visible){cube(p.x,p.y,p.z,p.w,.45,p.d,&#x27;#70d7b9&#x27;,&#x27;#286c70&#x27;,&#x27;#3c9b8c&#x27;);const q=project(p.x,p.y+.015,p.z);if(q){ctx.globalAlpha=.35;ctx.fillStyle=&#x27;#b6ffe5&#x27;;ctx.fillRect(q.x-q.scale*p.w*.25,q.y,Math.max(1,q.scale*p.w*.5),Math.max(1,q.scale*.045));ctx.globalAlpha=1}}
+ for(const c of coinItems){if(!c.got&amp;&amp;c.z&gt;player.z-3&amp;&amp;c.z&lt;player.z+45)drawCoin(c)}
+ for(const p of particles){const q=project(p.x,p.y,p.z);if(q){ctx.globalAlpha=clamp(p.life/.55,0,1);ctx.fillStyle=&#x27;#ffe36a&#x27;;ctx.beginPath();ctx.arc(q.x,q.y,Math.max(1,q.scale*.08),0,Math.PI*2);ctx.fill();ctx.globalAlpha=1}}
+ drawPlayer();
+ // subtle vignette
+ const vg=ctx.createRadialGradient(W/2,H/2,H*.15,W/2,H/2,H*.78);vg.addColorStop(0,&#x27;#00000000&#x27;);vg.addColorStop(1,&#x27;#060a19a0&#x27;);ctx.fillStyle=vg;ctx.fillRect(0,0,W,H);
+}
+function loop(t){const dt=Math.min(.035,(t-last)/1000||0);last=t;update(dt);render();requestAnimationFrame(loop)}
+makeWorld();requestAnimationFrame(loop);
+})();
+&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;" allow="fullscreen"></iframe>
+    <div class="hint">Mobile: use the arrow pad and JUMP button. Computer: use WASD or arrow keys and Space to jump. Tip: land on the green platforms and collect coins.</div>
+   </div>
+  </div>
+ </section>
+ <section id="features">
+  <div class="wrap">
+   <div class="section-head"><div><h2>What's in the game?</h2><p class="sub">A small beginning for a bigger adventure.</p></div></div>
+   <div class="features">
+    <article class="feature"><div class="ico">🌋</div><h3>Rising lava</h3><p>Keep moving forward and make each jump count. Falling behind ends the run.</p></article>
+    <article class="feature"><div class="ico">🪙</div><h3>Collect coins</h3><p>Grab glowing coins as you travel and try to set a new personal record.</p></article>
+    <article class="feature"><div class="ico">📱</div><h3>Play your way</h3><p>Designed with touch buttons for phones and keyboard controls for computers.</p></article>
+   </div>
+  </div>
+ </section>
+ <section id="about">
+  <div class="wrap">
+   <div class="section-head"><div><h2>Made by a future game developer</h2><p class="sub">This is an early prototype. More levels, upgrades, and effects can come next.</p></div></div>
+   <div class="feature"><p style="color:#c4cee3;line-height:1.8;margin:0">The goal is to grow Trio of Lava Rush into a more polished game. This page is a local website prototype, not yet a public internet address. Before publishing, test it on your phone and ask a parent or guardian to help with accounts and any payments.</p></div>
+  </div>
+ </section>
+</main>
+<footer><div class="wrap footer-inner"><span>© Trio of Lava Rush · Prototype project</span><span>Built for the browser · More updates coming</span></div></footer>
+</body>
+</html>
